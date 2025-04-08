@@ -8,9 +8,10 @@ dotenv.config();
 
 const app = express();
 
+// Update CORS configuration to allow requests from your Netlify domain
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://verdant-rolypoly-f588c9.netlify.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
