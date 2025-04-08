@@ -8,8 +8,6 @@ dotenv.config();
 
 const app = express();
 
-// Simple CORS configuration
-// app.use(cors());
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -19,13 +17,10 @@ app.use(
   })
 );
 
-// Middleware
 app.use(express.json());
 
-// Routes
 app.use("/api/feedback", feedbackRoutes);
 
-// MongoDB connection
 const connectDB = async () => {
   try {
     if (!process.env.MONGODB_URI) {
@@ -39,7 +34,6 @@ const connectDB = async () => {
   }
 };
 
-// Start server
 const startServer = async () => {
   try {
     await connectDB();
