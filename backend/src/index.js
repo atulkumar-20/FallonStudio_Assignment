@@ -9,14 +9,17 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:5173", // Development
-  "https://feedback-collectorrr.netlify.app/",
+  "http://localhost:5173", 
+  "https://feedback-collectorrr.netlify.app", 
+  "https://fallonstudio-assignment-1.onrender.com" 
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
+      // For development and testing, log the origin
+      console.log('Request origin:', origin);
+
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.indexOf(origin) === -1) {

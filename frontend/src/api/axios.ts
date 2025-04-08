@@ -8,14 +8,14 @@ const apiClient = axios.create({
     "Content-Type": "application/json",
     "Accept": "application/json"
   },
-  timeout: 10000, // 10 second timeout
+  timeout: 10000,
   withCredentials: true
 });
 
 // Add request interceptor for debugging
 apiClient.interceptors.request.use(
   (config) => {
-    console.log('Making request to:', config.url);
+    console.log('Making request to:', config.url, 'with base URL:', config.baseURL);
     return config;
   },
   (error) => {
@@ -31,6 +31,7 @@ apiClient.interceptors.response.use(
     if (error.code === 'ERR_NETWORK') {
       console.error('Network Error - Server might be down or unreachable');
       console.error('Attempted URL:', error.config?.url);
+      console.error('Base URL:', error.config?.baseURL);
       console.error('Full error:', error);
     } else if (error.response) {
       console.error('Response error:', error.response.data);
