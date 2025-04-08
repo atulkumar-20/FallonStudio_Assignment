@@ -14,6 +14,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://feedback-collectorr.netlify.app",
+      "https://fallonstudio-assignment-1.onrender.com"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
