@@ -8,21 +8,34 @@ dotenv.config();
 
 const app = express();
 
-// Update CORS configuration to allow requests from your Netlify domain
+const allowedOrigins = [
+  'http://localhost:5173', // Development
+  'https://fallonstudio-assignment-1.netlify.app', // Production - replace with your actual Netlify domain
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://feedback-collectorr.netlify.app",
-      "https://fallonstudio-assignment-1.onrender.com"
-    ],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "Origin", "Accept"],
+    exposedHeaders: ["Content-Length", "X-Confirm-Delete"]
   })
 );
 
 app.use(express.json());
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
 
 app.use("/api/feedback", feedbackRoutes);
 
