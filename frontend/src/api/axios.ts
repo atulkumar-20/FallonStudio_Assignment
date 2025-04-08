@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+if (!API_BASE_URL) {
+  console.error('API URL not found. Make sure VITE_API_URL is set in .env or deployment environment.');
+}
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
